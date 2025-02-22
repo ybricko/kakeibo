@@ -48,13 +48,8 @@ public class HomeFragment extends Fragment {
         this.adapter = ExpenseListAdapter.getInstance(getContext());
         this.expenseRepository = ExpenseRepository.getInstance(ExpenseDataSource.getInstance(getContext()));
         this.sharedPreferenceService = SharedPreferenceService.getInstance(getContext());
-        fillHomeWithExpenses(inflater, container);
-        setCurrencySettings();
-        setMonthlyState();
+
         addAddButtonListener(root);
-        addCategoryTypeFilterListener();
-        addDateRangeFilterListener();
-        registerAdapterOnChangeListener();
         return root;
     }
 
@@ -64,68 +59,11 @@ public class HomeFragment extends Fragment {
         binding = null;
     }
 
-    private void registerAdapterOnChangeListener() {
-        adapter.registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
 
-            //showing correct value in case of filtering
-            @Override
-            public void onChanged() {
-                super.onChanged();
-                setMonthlyState();
-            }
 
-            //showing correct value in case of removing expenses
-            @Override
-            public void onItemRangeRemoved(int positionStart, int itemCount) {
-                super.onChanged();
-                setMonthlyState();
-            }
-        });
-    }
 
-    private void setMonthlyState() {
-        MaterialTextView monthlyIncome = binding.monthlyIncome;
-        MaterialTextView monthlyExpense = binding.monthlyExpense;
-        Pair<Integer, Integer> allFromCurrentMonth = expenseRepository.getAllFromCurrentMonth();
-        monthlyIncome.setText(sharedPreferenceService.applySelectedCurrency(allFromCurrentMonth.first).toString());
-        monthlyExpense.setText(sharedPreferenceService.applySelectedCurrency(allFromCurrentMonth.second).toString());
-    }
 
-    private void setCurrencySettings() {
-        binding.currency.setText("[" + sharedPreferenceService.getCurrency() + "]");
-    }
 
-    private void addDateRangeFilterListener() {
-        binding.filterChipDateRange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MaterialDatePicker<Pair<Long, Long>> dateRangePicker = MaterialDatePicker.Builder
-                        .dateRangePicker()
-                        .setTitleText(R.string.date_range_picker_title)
-                        .build();
-                dateRangePicker.show(getChildFragmentManager(), "filter date range");
-                dateRangePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
-                    @Override
-                    public void onPositiveButtonClick(Pair<Long, Long> selection) {
-                        LocalDate from = LocalDate.parse(DateFormat.format("yyyy-MM-dd", new Date(selection.first)).toString());
-                        LocalDate to = LocalDate.parse(DateFormat.format("yyyy-MM-dd", new Date(selection.second)).toString());
-                        adapter.filter(from, to);
-                    }
-                });
-                Toast.makeText(getContext(), "Calling Date range picker", Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    private void addCategoryTypeFilterListener() {
-        binding.incomeOrExpenseChipGroup.setOnCheckedStateChangeListener(new ChipGroup.OnCheckedStateChangeListener() {
-            @Override
-            public void onCheckedChanged(@NonNull ChipGroup group, @NonNull List<Integer> checkedIds) {
-                Chip chip = (Chip) group.findViewById(checkedIds.get(0));//single selection true -> 1 item in checkedIds
-                adapter.filter(chip.getText().toString());
-            }
-        });
-    }
 
     private void addAddButtonListener(View root) {
         FloatingActionButton addExpenseButton = root.findViewById(R.id.floatingActionButton);
@@ -136,14 +74,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void fillHomeWithExpenses(@NonNull LayoutInflater inflater, ViewGroup container) {
-        RecyclerView transactionsListView =
-                (RecyclerView) inflater.inflate(R.layout.fragment_transaction_list, container, false);
 
-        adapter.addSwipeListener(transactionsListView);
-        transactionsListView.setLayoutManager(new LinearLayoutManager(getContext()));
-        transactionsListView.setAdapter(adapter);
-        binding.transactionsMaterialCardView.addView(transactionsListView);
-    }
 
 }

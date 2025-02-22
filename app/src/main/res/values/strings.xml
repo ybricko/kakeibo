@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">DOMPETQU</string>
+    <string name="app_name">DOMPETQU
+
+    </string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -60,4 +62,14 @@
     <string name="signup_login_hint">Already have an account? Sign In</string>
     <string name="login_signup_hint">Don\'t have an account? Sign Up</string>
     <string name="logout_button">Logout</string>
+
+
+        <string-array name="currency_array">
+            <item>IDR</item>
+            <item>USD</item>
+            <item>EUR</item>
+            <item>HUF</item>
+        </string-array>
+
+
 </resources>

@@ -1,15 +1,24 @@
 package com.example.xpense_tracker.data;
 
 public enum Currency {
-    HUF(1.0), USD(0.0028), EUR(0.0026);
+    IDR(1.0, "Rp"), // Indonesian Rupiah
+    USD(0.0028, "$"), // USD
+    EUR(0.0026, "€"), // Euro
+    HUF(1.0, "Ft"); // Hungarian Forint
+
+    private final double changingNum;
+    private final String currencySymbol;
+
+    Currency(double changingNum, String currencySymbol) {
+        this.changingNum = changingNum;
+        this.currencySymbol = currencySymbol;
+    }
 
     public double getChangingNum() {
         return changingNum;
     }
 
-    private final double changingNum;
-
-    Currency(double changingNum) {
-        this.changingNum = changingNum;
+    public String getCurrencySymbol() {
+        return currencySymbol;
     }
 }

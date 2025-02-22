@@ -14,14 +14,12 @@ import com.example.xpense_tracker.R;
 import com.example.xpense_tracker.data.CategoryDataSource;
 import com.example.xpense_tracker.data.CategoryRepository;
 import com.example.xpense_tracker.data.Currency;
-import com.example.xpense_tracker.data.LoginRepository;
 import com.example.xpense_tracker.data.SharedPreferenceService;
 import com.example.xpense_tracker.data.model.Category;
 import com.example.xpense_tracker.data.model.CategoryType;
 import com.example.xpense_tracker.data.model.SubCategory;
 import com.example.xpense_tracker.databinding.FragmentSettingsBinding;
 import com.example.xpense_tracker.ui.UIUtil;
-import com.example.xpense_tracker.ui.login.LoginActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -50,7 +48,6 @@ public class SettingsFragment extends Fragment {
         this.categoryRepository = CategoryRepository.getInstance(CategoryDataSource.getInstance(requireContext()));
 
         addCurrencyChipListener();
-        addLogoutButtonListener();
         checkSelectedCurrencyChip();
         addAddCategoryButtonListener(root);
         addAddSubCategoryButtonListener(root);
@@ -106,14 +103,6 @@ public class SettingsFragment extends Fragment {
         addNewSubCategoryButton.setOnClickListener(v ->
                 SubCategoryDialogFragment.newInstance().show(getChildFragmentManager(), "SubCategoryDialogFragment")
         );
-    }
-
-    private void addLogoutButtonListener() {
-        binding.logout.setOnClickListener(v -> {
-            LoginRepository.getInstance(requireContext()).logout(); // ✅ Menggunakan `requireContext()`
-            Intent loginActivity = new Intent(requireContext(), LoginActivity.class);
-            startActivity(loginActivity);
-        });
     }
 
     private void checkSelectedCurrencyChip() {

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#FFFAFA"
+    android:padding="20dp">
+
+    <!-- Title: Balance -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BALANCE"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#4E4E4E"/>
+
+    <!-- Subtitle: Masukkan saldo -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Masukkan Saldo Awal Yang Anda Miliki"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="#4E4E4E"/>
+
+    <!-- Input untuk saldo awal -->
+    <EditText
+        android:id="@+id/et_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Rp."
+        android:inputType="numberDecimal"
+        android:background="@android:drawable/editbox_background"
+        android:padding="12dp"
+        android:layout_marginTop="20dp"
+        android:textColorHint="#777"
+        android:layout_gravity="center_horizontal"/>
+
+    <!-- Tombol Done -->
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="DONE"
+        android:backgroundTint="#A5BFA4"
+        android:textColor="#FFF"
+        android:layout_marginTop="20dp"
+        android:padding="12dp"/>
+
+</LinearLayout>
